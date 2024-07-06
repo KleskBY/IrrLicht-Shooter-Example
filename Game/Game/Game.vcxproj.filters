@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="weapon">
+      <UniqueIdentifier>{dbafd0fb-7e5c-4dc5-9544-07480d8c10ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{717ff152-fff5-41e6-b840-286ca5ac02d7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CWeapon.h">
+      <Filter>weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="ak74.h">
+      <Filter>weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="footsteps.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="pm.h">
+      <Filter>weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="weapons.h">
+      <Filter>weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="knife.h">
+      <Filter>weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletholes.h">
+      <Filter>weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="inventory.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="viewmodel.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="materials.h" />
+    <ClInclude Include="scene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CWeapon.cpp">
+      <Filter>weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="footsteps.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletholes.cpp">
+      <Filter>weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="weapons.cpp">
+      <Filter>weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp" />
+    <ClCompile Include="inventory.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="sound.cpp" />
+    <ClCompile Include="viewmodel.cpp" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="materials.cpp" />
+    <ClCompile Include="scene.cpp" />
+  </ItemGroup>
+</Project>
