@@ -72,9 +72,9 @@ bool LoadLevel(std::string levelName)
 			scene::IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);
 
 			//The sun (trash)
-			//scene::ILightSceneNode* light = smgr->addLightSceneNode(MainCamera, core::vector3df(0, 100, 100), video::SColor(255, 255, 200, 200));
-			//light->setLightType(irr::video::ELT_DIRECTIONAL);
-			//light->setRotation(core::vector3df(0.025, 45.025, 0.025));
+			scene::ILightSceneNode* light = smgr->addLightSceneNode(MainCamera, core::vector3df(0, 100, 100), video::SColor(255, 255, 200, 200));
+			light->setLightType(irr::video::ELT_DIRECTIONAL);
+			light->setRotation(core::vector3df(0.025, 45.025, 0.025));
 
 			auto shape = new IBvhTriangleMeshShape(node, node->getMesh(), 0);
 			world->addRigidBody(shape);
