@@ -1,6 +1,8 @@
 #define NOMINMAX
 #undef BT_DEBUG
 
+//#define GAME_DEBUG
+
 #include <iostream>
 #include "main.h"
 #include "input.h"
@@ -152,12 +154,13 @@ int main(int argc, char* argv[])
 	MainCamera->setFarValue(999.f);
 	MainCamera->bindTargetAndRotation(true);
 
+#ifdef GAME_DEBUG
 	scene::IBillboardSceneNode* bill = smgr->addBillboardSceneNode();
 	bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	bill->setMaterialTexture(0, driver->getTexture("data/particle.bmp"));
 	bill->setMaterialFlag(video::EMF_LIGHTING, false);
 	bill->setMaterialFlag(video::EMF_ZBUFFER, true);
-	bill->setSize(core::dimension2d<f32>(2.0f, 2.0f));
+	bill->setSize(core::dimension2d<f32>(0.20f, 0.20f));
 	bill->setID(ID_IsNotPickable);
 
 	video::SMaterial material;
@@ -165,6 +168,7 @@ int main(int argc, char* argv[])
 	material.Lighting = false;
 	material.ZBuffer = false;
 	material.Wireframe = true;
+#endif
 
 	IGUIStaticText* fpstext = guienv->addStaticText(L"", core::rect<s32>(0, 0, 200, 24), false, false);
 
@@ -192,6 +196,20 @@ int main(int argc, char* argv[])
 				smgr->drawAll();
 				guienv->drawAll();
 
+				UpdateEntities();
+				UpdateEntitiesCollision();
+
+				world->stepSimulation(DeltaTime);
+				handleCollisions();
+#ifdef GAME_DEBUG
+
+				world->debugDrawWorld(true);
+				world->debugDrawProperties(true);
+
+				driver->setTransform(video::ETS_WORLD, core::matrix4());
+				driver->setMaterial(material);
+				driver->draw3DBox(player::PlayerCollider);
+
 				core::line3d<f32> ray;
 				ray.start = MainCamera->getPosition();
 				ray.end = ray.start + (MainCamera->getTarget() - ray.start).normalize() * 1000.0f;
@@ -201,23 +219,12 @@ int main(int argc, char* argv[])
 				if (selectedSceneNode)
 				{
 					bill->setPosition(intersection);
-
 					driver->setTransform(video::ETS_WORLD, core::matrix4());
 					driver->setMaterial(material);
 					driver->draw3DTriangle(hitTriangle, video::SColor(0, 255, 0, 0));
 				}
 
-				UpdateEntities();
-				UpdateEntitiesCollision();
-
-				world->stepSimulation(DeltaTime);
-				handleCollisions();
-				//world->debugDrawWorld(true);
-				//world->debugDrawProperties(true);
-
-				driver->setTransform(video::ETS_WORLD, core::matrix4());
-				driver->setMaterial(material);
-				driver->draw3DBox(player::PlayerCollider);
+#endif // GAME_DEBUG
 
 				core::stringw str(L"FPS: ");
 				str.append(core::stringw(driver->getFPS()));

@@ -33,6 +33,8 @@ void AddBulletHole(vector3df pos, vector3df normal)
 
 	// Convert the rotation matrix to Euler angles
 	core::vector3df rot  = rotationMatrix.getRotationDegrees();
+	rot.X -= 90.0f;
+	pos += normal * 0.001f; // Move 1mm away from the wall so it will not blend in
 
 	if (!bulletHoles[currentBulletHoleNumber])
 	{

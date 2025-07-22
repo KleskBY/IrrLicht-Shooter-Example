@@ -14,7 +14,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+#*.dll
 
 # Fortran module files
 *.mod
@@ -24,9 +24,81 @@
 *.lai
 *.la
 *.a
-*.lib
+#*.lib
 
 # Executables
 *.exe
 *.out
 *.app
+
+*.vs
+
+# Ignore build directories and output
+[Bb]in/
+[Oo]bj/
+out/
+Build/
+
+# Ignore generated files
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ipch
+*.iobj
+*.ipdb
+*.idb
+*.log
+*.tlog
+*.lastbuildstate
+*.recipe
+
+# Ignore VS temporary and user-specific files
+*.suo
+*.user
+*.userosscache
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+
+# Ignore backup and autosave files
+*~
+*.bak
+*.tmp
+
+# Ignore IntelliSense and cache files
+*.ncb
+*.aps
+*.cache
+*.ilk
+
+# Ignore CMake build directory if present
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ignore solution-specific settings
+*.vs/
+.vscode/
+
+# Ignore NuGet packages and other external dependencies
+packages/
+*.nupkg
+project.lock.json
+
+# Ignore crash dumps
+*.mdmp
+*.dmp
+
+# Ignore custom build rules output
+*.rule
+
+# Ignore Code Analysis Reports
+*.codeanalysis
+
+# Optional: ignore your own additional test or temp folders
+test_output/
+temp/
