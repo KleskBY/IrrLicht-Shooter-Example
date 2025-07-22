@@ -28,9 +28,9 @@ void ProcessNodes()
 			selector = smgr->createTriangleSelector(((scene::IMeshSceneNode*)node)->getMesh(), node);
 			selector = smgr->createOctreeTriangleSelector(((scene::IMeshSceneNode*)node)->getMesh(), node, 128);
 			//((scene::IMeshSceneNode*)node)->addShadowVolumeSceneNode();
-			node->setMaterialFlag(video::EMF_LIGHTING, true);
-			node->setMaterialFlag(video::EMF_BILINEAR_FILTER, false);
-			node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
+			//node->setMaterialFlag(video::EMF_LIGHTING, true);
+			//node->setMaterialFlag(video::EMF_BILINEAR_FILTER, false);
+			//node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
 			break;
 
 		case scene::ESNT_TERRAIN:
@@ -70,11 +70,11 @@ bool LoadLevel(std::string levelName)
 		{
 			scene::IMesh* mesh = smgr->getMesh(mdlname.c_str());
 			scene::IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);
-			//node->setScale(core::vector3df(0.025, 0.025, 0.025));
 
-			scene::ILightSceneNode* light = smgr->addLightSceneNode(MainCamera, core::vector3df(0, 0, 0), video::SColor(255, 255, 200, 200));
-			light->setLightType(irr::video::ELT_DIRECTIONAL);
-			light->setRotation(core::vector3df(0.025, 45.025, 0.025));
+			//The sun (trash)
+			//scene::ILightSceneNode* light = smgr->addLightSceneNode(MainCamera, core::vector3df(0, 100, 100), video::SColor(255, 255, 200, 200));
+			//light->setLightType(irr::video::ELT_DIRECTIONAL);
+			//light->setRotation(core::vector3df(0.025, 45.025, 0.025));
 
 			auto shape = new IBvhTriangleMeshShape(node, node->getMesh(), 0);
 			world->addRigidBody(shape);
