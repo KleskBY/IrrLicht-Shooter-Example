@@ -28,8 +28,6 @@ extern gui::IGUIEnvironment* guienv;
 
 #include <irrBullet.h>
 #include <irrBulletCommon.h>
-//IRRBULLET
-extern irrBulletWorld* world;
 
 enum
 {

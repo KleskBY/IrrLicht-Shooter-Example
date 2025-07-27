@@ -102,3 +102,8 @@ project.lock.json
 # Optional: ignore your own additional test or temp folders
 test_output/
 temp/
+/Game/Game/data - Copy
+/Game/Game/data
+/Game/Game/data3
+/media
+Game/Game/data.zip

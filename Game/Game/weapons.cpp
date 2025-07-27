@@ -51,7 +51,7 @@ namespace weapons
 		for (int i = currentIndex + 1; i < MAX_WEAPONS + currentIndex; i++)
 		{
 			int index = i;
-			if (index > MAX_WEAPONS) index = 1;
+			if (index > MAX_WEAPONS -1) index = 1;
 			if (index < 1) index = 9;
 			std::cout << index << std::endl;
 
@@ -96,9 +96,12 @@ namespace weapons
 				if (Time > chaningWeaponEnd)
 				{
 					SelectWeapon(nextWeaponIndex);
-					ActiveWeapon->Get();
-					nextWeaponIndex = 0;
-					changingWeapon = false;
+					if (ActiveWeapon)
+					{
+						ActiveWeapon->Get();
+						nextWeaponIndex = 0;
+						changingWeapon = false;
+					}
 				}
 				return;
 			}

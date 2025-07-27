@@ -95,7 +95,6 @@ namespace input
         float z = r * cosf(m_yaw);
         float x = r * sinf(m_yaw);
         MainCamera->setTarget(MainCamera->getPosition() + core::vector3df(x, y, z));
-
         PunchAngle = lerp<vector3df>(PunchAngle, vector3df(0, 0, 0), 10 * DeltaTime);
         MainCamera->setRotation(lerp(MainCamera->getRotation(), MainCamera->getRotation() + PunchAngle, 20 * DeltaTime));
     }

@@ -20,8 +20,8 @@ namespace player
 	//Variables
 	extern core::vector3df PlayerPosition;
 	extern core::vector3df PlayerVelocity;
-	//extern core::vector3df VecView;
 	extern core::vector3df CameraPos;
+	extern core::vector3df CameraStartRotation;
 	extern core::vector3df PlayerSize;
 	extern aabbox3df PlayerCollider;
 

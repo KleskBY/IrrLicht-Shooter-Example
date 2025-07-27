@@ -35,13 +35,13 @@ void CWeapon::FireBullet(vector3df spread, float dist, float dmg)
     AddBulletHole(intersection, normal);
     Muzzleflash();
 
-    IParticleSystemSceneNode* partSys = createParticleSystem(intersection, normal / 100, 2, 8,
+    IParticleSystemSceneNode* partSys = createParticleSystem(intersection, normal / 100, 8, 8,
         SColor(0, 255, 255, 255), SColor(0, 255, 255, 255),
         500.0f, 500.0f,
         0,
         dimension2df(0.1f, 0.1f), dimension2df(0.2f, 0.2f),
         "data/smoke2.jpg",
-        500.0f,
+        350.0f,
         true,
         EMT_TRANSPARENT_ADD_COLOR,
         true);

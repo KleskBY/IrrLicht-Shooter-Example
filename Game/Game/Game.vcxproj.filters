@@ -19,6 +19,18 @@
     <Filter Include="player">
       <UniqueIdentifier>{717ff152-fff5-41e6-b840-286ca5ac02d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{f539f929-7fc6-4794-a0a6-a0b2fe7a380b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{1a54c7b6-7283-4e62-9770-c21bc078e62e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gui">
+      <UniqueIdentifier>{79691c9e-cae4-4980-a3a9-2681db12548e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="items">
+      <UniqueIdentifier>{72e457ce-04dc-4110-89a4-47144807eeec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CWeapon.h">
@@ -49,10 +61,29 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="inventory.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="viewmodel.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="materials.h" />
-    <ClInclude Include="scene.h" />
+    <ClInclude Include="lightgrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dylight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="items.h">
+      <Filter>items</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="viewmodel.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="gui.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CWeapon.cpp">
@@ -74,9 +105,28 @@
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sound.cpp" />
-    <ClCompile Include="viewmodel.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="materials.cpp" />
-    <ClCompile Include="scene.cpp" />
+    <ClCompile Include="lightgrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dylight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="items.cpp">
+      <Filter>items</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="viewmodel.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="gui.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

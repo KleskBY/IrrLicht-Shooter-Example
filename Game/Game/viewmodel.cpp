@@ -1,7 +1,11 @@
-#include "viewmodel.h"
+﻿#include "viewmodel.h"
 #include "main.h"
 #include "player.h"
 #include "weapons.h"
+#include "scene.h"
+#include "materials.h"
+#include "lightgrid.h"
+#include "dylight.h"
 
 IAnimatedMesh* ViewmodelMesh;
 IAnimatedMeshSceneNode* ViewmodelNode;
@@ -69,7 +73,7 @@ void DrawMuzzleflashLight()
 {
 	if (!MuzzleflashLight)
 	{
-		MuzzleflashLight = smgr->addLightSceneNode(MainCamera, core::vector3df(0, 0, 0), video::SColor(255, 255, 200, 200), 0.01f);
+		MuzzleflashLight = smgr->addLightSceneNode(MainCamera, core::vector3df(0, 0.05f, 0), video::SColor(255, 255, 200, 200), 0.01f);
 		MuzzleflashLight->setLightType(irr::video::ELT_POINT);
 	}
 	MuzzleflashLight->setRadius(MuzzleflashLight->getRadius() - 5.f * DeltaTime);
@@ -141,7 +145,6 @@ void WeaponLength()
 	}
 
 	weaponLengthOffset = lerp(weaponLengthOffset, vector3df(0, 0, targetZ), 20 * DeltaTime);
-	//ViewmodelNode->setPosition(lerp(ViewmodelNode->getPosition(), vector3df(0, 0, targetZ), 20 * DeltaTime));
 }
 
 void DrawViewmodel()
@@ -151,11 +154,42 @@ void DrawViewmodel()
 	if (ViewmodelModel != lastViewmodelModel)
 	{
 		ViewmodelMesh = smgr->getMesh(ViewmodelModel.c_str());
-		if (!ViewmodelNode) ViewmodelNode = smgr->addAnimatedMeshSceneNode(ViewmodelMesh, MainCamera);
-		else ViewmodelNode->setMesh(ViewmodelMesh);
+		if (!ViewmodelNode)
+		{
+			ViewmodelNode = smgr->addAnimatedMeshSceneNode(ViewmodelMesh, MainCamera);
+			//ViewmodelNode->addShadowVolumeSceneNode();
+
+		}
+		else
+		{
+			ViewmodelNode->setMesh(ViewmodelMesh);
+			ViewmodelNode->setMaterialFlag(video::EMF_LIGHTING, true);
+			SetDefaultMaterial(ViewmodelNode);
+			for (int i = 0; i < ViewmodelNode->getMaterialCount(); i++)
+			{
+				ViewmodelNode->getMaterial(i).AmbientColor = SColor(0, 0, 0, 0);
+			}
+		}
 	}
 
 	if (!ViewmodelNode) return;
+
+	//LightSample s = GetLightColorAtPoint(MainCamera->getPosition(), SceneMesh);
+	//video::SColor color = video::SColor(255.f, s.color.getRed() + s.brightness, s.color.getGreen() + s.brightness, s.color.getBlue() + s.brightness);
+	//std::cout << color.getRed() << " " << color.getGreen() << " " << color.getBlue() << std::endl;
+
+	//video::SColor color = GetLightmapColorAtRayHit(MainCamera->getPosition());
+	//color = video::SColor(255, color.getRed() * 4, color.getGreen() * 4, color.getBlue() * 4);
+	//std::cout << color.getRed() << " " << color.getGreen() << " " << color.getBlue() << std::endl;
+
+	//video::SColor color = GetDynamicLightColorAtPosition(MainCamera->getPosition()).toSColor();
+	//std::cout << color.getRed() << " " << color.getGreen() << " " << color.getBlue() << std::endl;
+	//for (int i = 0; i < ViewmodelNode->getMaterialCount(); i++)
+	//{
+	//	ViewmodelNode->getMaterial(i).EmissiveColor = color;
+	//	ViewmodelNode->getMaterial(i).AmbientColor = color;
+	//}
+
 
 	WeaponBob();
 	//WeaponLean();
@@ -163,13 +197,10 @@ void DrawViewmodel()
 	WeaponLength();
 
 	ViewmodelNode->setRotation(vector3df(0, -90, 0));
-	ViewmodelNode->setScale(vector3df(0.025, 0.025, 0.025));
+	ViewmodelNode->setScale(vector3df(0.025f, 0.025f, 0.025f));
 	ViewmodelNode->setCurrentFrame(ViewmodelFrame);
 	ViewmodelNode->setPosition(bobOffset + weaponOffset + weaponLengthOffset + swayOffset);
-	//ViewmodelNode->setPosition(vector3df(0, 0, 0));
 	ViewmodelNode->updateAbsolutePosition();
-
-	//
 		
 	DrawMuzzleflashLight();
 }

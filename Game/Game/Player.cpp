@@ -13,6 +13,7 @@
 #include "pm.h"
 #include "knife.h"
 
+#include "collision.h"
 
 namespace player
 {
@@ -142,7 +143,8 @@ namespace player
 
 	void CreatePlayer()
 	{
-		PlayerController = new IKinematicCharacterController(world, PlayerSize.Y, PlayerSize.X, STEP_HEIGHT);
+		PlayerController = new IKinematicCharacterController(collision::world, PlayerSize.Y, PlayerSize.X, STEP_HEIGHT);
+		PlayerController->warp(PlayerPosition);
 		PlayerController->setJumpForce(JUMP_FORCE);
 		PlayerController->setGravity(GRAVITY);
 	}

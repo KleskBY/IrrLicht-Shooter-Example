@@ -13,7 +13,7 @@ public:
 	irr::core::vector3df position = vector3df(0, 0, 0);
 	irr::core::vector3df rotation = vector3df(0, 0, 0);
 	irr::core::vector3df size = vector3df(1, 1, 1);
-	irr::core::vector3df scale = vector3df(1, 1, 1);;
+	irr::core::vector3df scale = vector3df(1, 1, 1);
 	IAnimatedMeshSceneNode* MeshNode = nullptr;
 	IMeshSceneNode* ColliderNode = nullptr;
 	ICollisionShape* shape = nullptr;
