@@ -2,6 +2,9 @@
 #include "entity.h"
 #include "weapons.h"
 #include "ak74.h"
+#include "sound.h"
+#include "viewflash.h"
+
 
 CEntity* SpawnItem(vector3df pos, vector3df angles)
 {
@@ -13,18 +16,17 @@ CEntity* SpawnItem(vector3df pos, vector3df angles)
 	return e;
 }
 
-
-void WeaponTouch(CEntity* self)
+void Item_pickup(CEntity* self)
 {
-	CWeapon* ak74 = new WEAPON_AK74();
-	weapons::AddWeapon(ak74);
-	self->Remove();
+	sound::Play2D(ITEM_PICKUP_SOUND, 0.5f);
+	TriggerViewFlash(0.6f, 0.6f, 0.1f, 0.3f, 0.4f); // White flash, quick fade
+
 }
 
-void Item_AK74()
+void StartItem(CEntity* self)
 {
-	CEntity* item = SpawnItem();
-	item->model = "models/weapons/w_ak.md3";
-	item->scale = vector3df(0.025, 0.025, 0.025);
-	item->touch = WeaponTouch;
+	self->classname = "item";
+	self->flags = FL_ITEM;
 }
+
+

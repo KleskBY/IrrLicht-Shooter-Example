@@ -32,6 +32,7 @@ namespace input
     extern core::vector3df Movement;
     extern core::vector3df Recoil;
     extern core::vector3df PunchAngle;
+    extern bool Crouch;
     extern void ProcessMovement();
     extern void MouseLook();
     extern bool GetAttackInput();

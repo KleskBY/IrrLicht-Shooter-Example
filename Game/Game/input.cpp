@@ -9,10 +9,12 @@ namespace input
     vector3df Movement = vector3df(0, 0, 0);
     vector3df Recoil = vector3df(0,0,0);
     vector3df PunchAngle = vector3df(0, 0, 0);
+    bool Crouch = false;
     int mouseScroll = 0;
     void ProcessMovement()
     {
         Movement = core::vector3df(0, 0, 0);
+        Crouch = false;
 
         if (keys[irr::EKEY_CODE::KEY_KEY_W])
         {
@@ -36,7 +38,8 @@ namespace input
         }
         if (keys[irr::EKEY_CODE::KEY_LCONTROL])
         {
-            Movement.Y = -1;
+            //Movement.Y = -1;
+            Crouch = true;
         }
     }
 

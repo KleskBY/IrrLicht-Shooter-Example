@@ -35,12 +35,6 @@ void CEntity::UpdateEntity()
 		{
 			MeshNode = smgr->addAnimatedMeshSceneNode(smgr->getMesh(model.c_str()));
 			lastModel = model;
-
-			//ColliderNode = device->getSceneManager()->addCubeSceneNode(1.0);
-			//ColliderNode->setScale(vector3df(100.f, 100.f, 100.f));
-			//shape = new IBoxShape(ColliderNode, 0.f, true);
-			//auto body = world->addRigidBody(shape);
-			//ColliderNode->setVisible(false);
 		}
 		else
 		{
@@ -48,7 +42,6 @@ void CEntity::UpdateEntity()
 			{
 				MeshNode->setMesh(smgr->getMesh(model.c_str()));
 				lastModel = model;
-
 			}
 		}
 	}

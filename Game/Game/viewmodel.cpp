@@ -6,6 +6,7 @@
 #include "materials.h"
 #include "lightgrid.h"
 #include "dylight.h"
+#include "math.h"
 
 IAnimatedMesh* ViewmodelMesh;
 IAnimatedMeshSceneNode* ViewmodelNode;
@@ -73,7 +74,7 @@ void DrawMuzzleflashLight()
 {
 	if (!MuzzleflashLight)
 	{
-		MuzzleflashLight = smgr->addLightSceneNode(MainCamera, core::vector3df(0, 0.05f, 0), video::SColor(255, 255, 200, 200), 0.01f);
+		MuzzleflashLight = smgr->addLightSceneNode(MainCamera, core::vector3df(-0.1f, 0.05f, 0.3f), video::SColor(255, 255, 225, 225), 0.01f);
 		MuzzleflashLight->setLightType(irr::video::ELT_POINT);
 	}
 	MuzzleflashLight->setRadius(MuzzleflashLight->getRadius() - 5.f * DeltaTime);
@@ -92,7 +93,7 @@ void DrawMuzzleflashLight()
 
 		MuzzleflashNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 		MuzzleflashNode->setMaterialFlag(video::EMF_LIGHTING, false);
-		MuzzleflashNode->setMaterialFlag(video::EMF_BILINEAR_FILTER, false);
+		MuzzleflashNode->setMaterialFlag(video::EMF_TRILINEAR_FILTER, true);
 	}
 	else
 	{

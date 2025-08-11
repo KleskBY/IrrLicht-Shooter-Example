@@ -284,7 +284,7 @@ void CacheLightmaps(scene::IMesh* mesh)
     }
 }
 
-video::SColor GetLightmapColorAtRayHit(vector3df start)
+video::SColor GetLightmapColorAtRayHit(IMesh* SceneMesh, vector3df start)
 {
     // Cast ray downward
     core::vector3df end = start + core::vector3df(0, -1000, 0);

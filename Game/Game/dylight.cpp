@@ -2,7 +2,7 @@
 
 
 std::vector<Q3Light> g_Lights;
-
+gui::IGUIFont* font;
 s32 GetLight(IQ3LevelMesh* mesh, s32 startposIndex)
 {
 	if (0 == mesh) return 0;
@@ -34,17 +34,24 @@ s32 GetLight(IQ3LevelMesh* mesh, s32 startposIndex)
 
 	parsepos = 0;
 	vector3df color = irr::scene::quake3::getAsVector3df(group->get("_color"), parsepos);
-	if (color.X == 0 && color.Y == 0 && color.Z == 0) color = vector3df(1, 1, 1);
+	if (color.X == 0 && color.Y == 0 && color.Z == 0) color = vector3df(1.f, 1.f, 1.f);
 
 	Q3Light light;
 	light.position = pos;
 	light.radius = rad;
-	light.color.set(255, color.X, color.Y, color.Z);
+	light.color.set(color.X, color.Z, color.Y); // G and B are actually Z and Y
 
 	g_Lights.push_back(light);
 	auto cube = smgr->addCubeSceneNode(0.1f, 0,-1, pos);
-	cube->getMaterial(0).AmbientColor = light.color.toSColor();
-	smgr->addLightSceneNode(0, pos, light.color, rad * 0.1f);
+	cube->getMaterial(0).Lighting = false;
+	smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), light.color.toSColor());
+	auto lt = smgr->addLightSceneNode(0, pos, light.color.toSColor(), rad);
+
+	//gui::IGUIFont* font = device->getGUIEnvironment()->getFont("../../media/fontlucida.png");
+	//std::string cl = std::to_string(lt->getLightData().DiffuseColor.r) + ", " + std::to_string(lt->getLightData().DiffuseColor.g) + ", " + std::to_string(lt->getLightData().DiffuseColor.b);
+	//core::stringw name(cl.c_str());
+	//auto node = smgr->addBillboardTextSceneNode(font, name.c_str(), lt, core::dimension2d<f32>(2.0f, 0.20f), core::vector3df(0, 0, 0));
+
 	return lastIndex - index + 1;
 }
 
@@ -59,7 +66,7 @@ void ParseLights(IQ3LevelMesh* q3mesh)
 		remaining = GetLight(q3mesh, i);
 		i++;
 	}
-	std::cout << g_Lights.size() << std::endl;
+	std::cout << "LOADED AMOUNT OF LIGHTS: " << g_Lights.size() << std::endl;
 }
 
 

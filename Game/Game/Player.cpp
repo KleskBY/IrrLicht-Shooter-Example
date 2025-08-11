@@ -18,8 +18,8 @@
 namespace player
 {
 	core::vector3df PlayerPosition = core::vector3df(-1.0f, 20.0f, 0.0f);
+	core::vector3df VecView = core::vector3df(0.0f, 0.85f, 0.0f);
 	core::vector3df PlayerVelocity;
-	//core::vector3df VecView = core::vector3df(0.0f, 0.85f, 0.0f);
 	core::vector3df CameraPos;
 	core::vector3df PlayerSize = STAND_SIZE;
 	
@@ -27,9 +27,20 @@ namespace player
 
 	IKinematicCharacterController* PlayerController;
 	bool PlayerGrounded = false;
+	bool PlayerIsCrouching = false;
 	bool noclip = false;
 	int PlayerHealth = 100;
 
+
+	void CreatePlayer()
+	{
+		if (PlayerController) delete PlayerController;
+		PlayerController = new IKinematicCharacterController(collision::world, PlayerSize.Y, PlayerSize.X, STEP_HEIGHT);
+		PlayerController->warp(PlayerPosition);
+		PlayerController->setJumpForce(JUMP_FORCE);
+		PlayerController->setGravity(GRAVITY);
+		PlayerController->setUpInterpolate(true);
+	}
 
 	float lastJump;
 	void PlayerJump()
@@ -65,6 +76,7 @@ namespace player
 		core::vector3df wishvel = forward * input::Movement.X + side * input::Movement.Z;
 		wishvel.Y = 0.f;
 		wishvel.normalize();
+		if (PlayerIsCrouching) wishvel = wishvel * 0.5;
 		PlayerVelocity = PlayerVelocity + wishvel * ACCELERATION * SPEED * DeltaTime;
 	}
 
@@ -103,27 +115,54 @@ namespace player
 			ApplyFriction();
 			ApplyAcceleration();
 
-			//PlayerGrounded = PlayerController->isOnGround();
 			core::triangle3df out;
 			core::vector3df hit;
-			bool fall = false;
 			scene::ISceneNode* node;
-			core::vector3df fallvector = collMan->getCollisionResultPosition(meta, PlayerPosition, PlayerSize, core::vector3df(0, 0, 0), out, hit, fall, node, 0.0005f, core::vector3df(0, -0.01f, 0));
-			PlayerGrounded = !fall;
 
-			if (PlayerGrounded)
+			//if (input::Movement.Y < 0.f) // crouch input
+			if (input::Crouch) // crouch input
 			{
-				PlayerController->setGravity(0);
+				if (!PlayerIsCrouching)
+				{
+					if (PlayerGrounded && PlayerController->isOnGround())
+					{
+						PlayerIsCrouching = true;
+						PlayerSize = CROUCH_SIZE;
+						VecView = CROUCH_VIEW;
+						CreatePlayer();
+					}
+				}
 			}
-			else PlayerController->setGravity(GRAVITY);
+			else if (PlayerIsCrouching)
+			{
+				bool canStand = false;
+				core::vector3df fallvector = collMan->getCollisionResultPosition(meta, PlayerPosition, STAND_SIZE, core::vector3df(0, 0, 0), out, hit, canStand, node, 0.0005f, core::vector3df(0, 0.05f, 0));
+				//core::vector3df checkPos = PlayerPosition;
+				//checkPos.Y += (STAND_SIZE.Y - CROUCH_SIZE.Y); // check above head
+				//bool canStand = !collMan->getCollisionResultPosition(meta, checkPos, STAND_SIZE, core::vector3df(0, 0, 0), out, hit, fall, node, 0.0005f, core::vector3df(0, 1, 0)).getLengthSQ();
+				if (canStand)
+				{
+					PlayerIsCrouching = false;
+					PlayerSize = STAND_SIZE;
+					VecView = STAND_VIEW;
+					CreatePlayer();
+				}
+			}
 
 			if (PlayerController->isOnGround() && PlayerController->canJump())
 			{
 				if (input::Movement.Y > 0) PlayerJump();
 			}
 
-			if (input::Movement.Y < 0.f) PlayerController->getWorldTransform().setScale(0.5f);
-			else PlayerController->getWorldTransform().setScale(1.f);
+
+			bool fall = false;
+			core::vector3df fallvector = collMan->getCollisionResultPosition(meta, PlayerPosition, PlayerSize, core::vector3df(0, 0, 0), out, hit, fall, node, 0.0005f, core::vector3df(0, -0.01f, 0));
+			PlayerGrounded = !fall;
+
+			if (PlayerGrounded && PlayerController->isOnGround()) PlayerController->setGravity(0.0f); //disable gravity on ground so we dont slide down the slope
+			else PlayerController->setGravity(GRAVITY);
+
+
 
 			PlayerController->setWalkDirection(PlayerVelocity);
 
@@ -141,13 +180,7 @@ namespace player
 		}
 	}
 
-	void CreatePlayer()
-	{
-		PlayerController = new IKinematicCharacterController(collision::world, PlayerSize.Y, PlayerSize.X, STEP_HEIGHT);
-		PlayerController->warp(PlayerPosition);
-		PlayerController->setJumpForce(JUMP_FORCE);
-		PlayerController->setGravity(GRAVITY);
-	}
+
 
 	void PlayerUpdate()
 	{

@@ -7,4 +7,5 @@ namespace collision
 	void InitCollision();
 	void UpdateCollision();
 	void AddCollisionForMesh(ISceneNode* n, IMesh* collMesh);
+	void DebugCollisions();
 };

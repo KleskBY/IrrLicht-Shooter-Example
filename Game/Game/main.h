@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string>
+#include <sstream>
 
 
 
@@ -14,6 +15,7 @@ using namespace scene;
 using namespace gui;
 using namespace io;
 using namespace std;
+using namespace irr::scene::quake3;
 
 extern IrrlichtDevice* device;
 extern scene::ICameraSceneNode* MainCamera;
@@ -45,10 +47,6 @@ enum
 	IDFlag_IsHighlightable = 1 << 1
 };
 
-inline core::vector3df ClampVector(const core::vector3df& value, const core::vector3df& min, const core::vector3df& max)
-{
-	return core::vector3df(core::clamp(value.X, min.X, max.X), core::clamp(value.Y, min.Y, max.Y), core::clamp(value.Z, min.Z, max.Z));
-}
 
 #include <random>
 inline float Random(float min, float max)
@@ -57,6 +55,8 @@ inline float Random(float min, float max)
 	std::uniform_real_distribution<float> distribution(min, max);
 	return distribution(engine);
 }
+
+
 
 inline bool traceline(core::vector3df start, core::vector3df end)
 {

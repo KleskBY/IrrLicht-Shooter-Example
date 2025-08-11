@@ -1,5 +1,5 @@
 #include "CWeapon.h"
-
+#include "hud.h"
 
 void CWeapon::AddRecoil(float x, float y)
 {
@@ -7,6 +7,7 @@ void CWeapon::AddRecoil(float x, float y)
     input::Recoil.Y = input::Recoil.Y + y;
     input::PunchAngle.X = x * 10.f;
     input::PunchAngle.Y = y * 10.f;
+    hud::recoilAmount = hud::recoilAmount + abs(x * y);
 }
 
 
@@ -90,13 +91,14 @@ void CWeapon::WeaponThink()
     else if (state == WEAPON_STATE_HIDE)
     {
         weaponOffset = lerp(weaponOffset, vector3df(0, -1, 0), 10.f * DeltaTime);
+        frame = 0;
         //ViewmodelNode->setPosition(lerp(ViewmodelNode->getPosition(), vector3df(0, -1, 0), 10.f * DeltaTime));
     }
     else if (state == WEAPON_STATE_GET)
     {
         weaponOffset = lerp(weaponOffset, vector3df(0, 0, 0), 10.f * DeltaTime);
         if (weaponOffset.getDistanceFrom(vector3df(0, 0, 0)) < 0.05f) state = WEAPON_STATE_IDLE;
-
+        frame = 0;
         //ViewmodelNode->setPosition(lerp(ViewmodelNode->getPosition(), vector3df(0, 0, 0), 10.f * DeltaTime));
         //if (ViewmodelNode->getPosition().getDistanceFrom(vector3df(0, 0, 0)) < 0.05f) state = WEAPON_STATE_IDLE;
     }

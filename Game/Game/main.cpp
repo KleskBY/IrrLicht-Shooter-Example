@@ -13,15 +13,8 @@
 #include "ak74.h"
 #include "weapons.h"
 #include "collision.h"
-
-using namespace irr;
-using namespace core;
-using namespace video;
-using namespace scene;
-using namespace gui;
-using namespace io;
-using namespace std;
-using namespace irr::scene::quake3;
+#include "viewflash.h"
+#include "hud.h"
 
 IrrlichtDevice* device;
 video::IVideoDriver* driver;
@@ -39,7 +32,6 @@ int main(int argc, char* argv[])
 	bool fullscreen = false;
 	bool music = true;
 	bool shadows = true;
-	bool additive = false;
 	bool vsync = true;
 	bool aa = true;
 
@@ -72,7 +64,8 @@ int main(int argc, char* argv[])
 	smgr->getFileSystem()->addFileArchive("data");
 
 	//LoadLevel("level1");
-	LoadLevel("data/maps/e1m1.bsp");
+	LoadLevel("data/maps/20kdm2.bsp");
+	//LoadLevel("data/maps/e1m1.bsp");
 
 	smgr->setAmbientLight(video::SColorf(0.1f, 0.1f, 0.1f));
 	smgr->setShadowColor(video::SColor(150, 0, 0, 0));
@@ -101,8 +94,7 @@ int main(int argc, char* argv[])
 #endif
 
 	IGUIStaticText* fpstext = guienv->addStaticText(L"", core::rect<s32>(0, 0, 200, 24), false, false);
-
-
+	hud::InitHUD();
 
 
 	float lastFrameTime = 0;
@@ -129,10 +121,10 @@ int main(int argc, char* argv[])
 
 				UpdateEntities();
 				collision::UpdateCollision();
-
+				//collision::DebugCollisions();
+				ViewflashUpdate();
 
 #ifdef GAME_DEBUG
-
 				world->debugDrawWorld(true);
 				world->debugDrawProperties(true);
 
@@ -156,6 +148,8 @@ int main(int argc, char* argv[])
 
 #endif // GAME_DEBUG
 
+				driver->clearZBuffer();
+				hud::DrawHUD(weapons::ActiveWeapon->clip);
 				driver->endScene();
 			}
 
@@ -546,3 +540,5 @@ int main3()
 
 	return 0;
 }
+
+

@@ -3,6 +3,8 @@
 #include <vector>
 #include <irrlicht.h>
 
+const int FL_ITEM = 1;
+
 class CEntity; // Forward declaration of CEntity
 typedef void (*EntityFunc)(CEntity*);
 class CEntity {
@@ -10,6 +12,7 @@ public:
 	std::string name = "";
 	std::string classname = "";
 	std::string model = "";
+	int flags = 0;
 	irr::core::vector3df position = vector3df(0, 0, 0);
 	irr::core::vector3df rotation = vector3df(0, 0, 0);
 	irr::core::vector3df size = vector3df(1, 1, 1);
